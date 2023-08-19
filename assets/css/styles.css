@@ -27,18 +27,50 @@ nav ul{
 }
 
 nav li{
+  overflow: hidden;
   position: relative;
-  padding-inline: calc(var(--_gap) / 2);
+  padding: calc(var(--_gap) / 2);
 }
 nav li::after{
   content: '';
   position: absolute;
   left: 0;
-  bottom: -1rem;
+  bottom: 0;
   height: 3px;
   width: 100%;
   background: #fff;
+  translate: var(--_translate, 0);
+  scale: var(--_width, 0) 1;
+  transition: scale 300ms var(--_scale-delay, 0ms),
+              translate 500ms var(--_translate-delay, 0ms);
 }
+nav li:hover,
+nav li:focus-within{
+  --_width: 1;
+} /* ":focus-within" se usa para que funcione con los cursores */
+
+@supports selector(:has(h1)){
+  nav li:hover + li{
+    --_translate: -100%;
+    --_scale-delay: 300ms;
+    --_translate-delay: 200ms;
+  }
+  nav li:has(+ :hover){
+    --_translate: 100%;
+    --_scale-delay: 300ms;
+    --_translate-delay: 200ms;
+  }
+/* }
+nav li:hover + li{
+  --_translate: -100%;
+  --_scale-delay: 300ms;
+  --_translate-delay: 200ms;
+}
+nav li:has(+ :hover){
+  --_translate: 100%;
+  --_scale-delay: 300ms;
+  --_translate-delay: 200ms;
+} */
 
 nav a{
   position: relative;
